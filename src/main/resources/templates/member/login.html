@@ -2,15 +2,28 @@
 <html lang="ko">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
   <title>로그인</title>
-  <link rel="stylesheet" th:href="@{/static/css/default.css}" />
-  <link rel="stylesheet" th:href="@{/static/css/common.css}" />
-  <link rel="stylesheet" th:href="@{/static/css/content.css}" />
-  <link rel="stylesheet" th:href="@{/static/css/button.css}" />
+  <link rel="stylesheet" th:href="@{/static/css/default.css}"/>
+  <link rel="stylesheet" th:href="@{/static/css/common.css}"/>
+  <link rel="stylesheet" th:href="@{/static/css/content.css}"/>
+  <link rel="stylesheet" th:href="@{/static/css/button.css}"/>
   <style>
-    #login_box .signup_btn {background:#42d870; border:0; border-bottom:solid 3px #4ed177; border-radius:50px; width:100%; height:52px; line-height:52px; font-size:16px; color:#fff; text-align:center; margin:20px 0 15px;}
-    #checkEmail{
+    #login_box .signup_btn {
+      background: #42d870;
+      border: 0;
+      border-bottom: solid 3px #4ed177;
+      border-radius: 50px;
+      width: 100%;
+      height: 52px;
+      line-height: 52px;
+      font-size: 16px;
+      color: #fff;
+      text-align: center;
+      margin: 20px 0 15px;
+    }
+
+    #checkEmail {
       display: none;
     }
   </style>
@@ -30,11 +43,11 @@
           <ul>
             <li>
               <label for="loginId" class="skip_info">아이디</label>
-              <input type="text" id="loginId" name="loginId" placeholder="아이디" title="아이디" />
+              <input type="text" id="loginId" name="loginId" placeholder="아이디" title="아이디"/>
             </li>
             <li>
               <label for="password" class="skip_info">비밀번호</label>
-              <input type="password" id="password" name="password" title="비밀번호" placeholder="비밀번호" />
+              <input type="password" id="password" name="password" title="비밀번호" placeholder="비밀번호"/>
             </li>
           </ul>
           <button type="button" onclick="login();" class="login_btn">로그인</button>
@@ -52,38 +65,42 @@
     <form id="signupForm" onsubmit="return false;" autocomplete="off">
       <table class="tb tb_row tl">
         <colgroup>
-          <col style="width:30%;" /><col style="width:70%;" />
+          <col style="width:30%;"/>
+          <col style="width:70%;"/>
         </colgroup>
         <tbody>
         <tr>
           <th scope="row">아이디<span class="es">필수 입력</span></th>
           <td>
-            <input type="text" name="loginId" placeholder="아이디" maxlength="20" style="width: 80%;" />
-            <button type="button" id="idCheckBtn" class="btns btn_st5" onclick="checkLoginId();" style="width: 20%; float: right;">중복 확인</button>
+            <input type="text" name="loginId" placeholder="아이디" maxlength="20" style="width: 80%;"/>
+            <button type="button" id="idCheckBtn" class="btns btn_st5" onclick="checkLoginId();"
+                    style="width: 20%; float: right;">중복 확인
+            </button>
           </td>
         </tr>
         <tr>
           <th scope="row">비밀번호(최소 12자리, 최대 20자리)<span class="es">필수 입력</span></th>
-          <td><input type="password" name="password" placeholder="비밀번호" maxlength="20" /></td>
+          <td><input type="password" name="password" placeholder="비밀번호" maxlength="20"/></td>
         </tr>
         <tr>
           <th scope="row">비밀번호 재입력<span class="es">필수 입력</span></th>
-          <td><input type="password" name="passwordCheck" placeholder="비밀번호 재입력" maxlength="20" /></td>
+          <td><input type="password" name="passwordCheck" placeholder="비밀번호 재입력" maxlength="20"/>
+          </td>
         </tr>
         <tr>
           <th scope="row">이름<span class="es">필수 입력</span></th>
-          <td><input type="text" name="name" placeholder="이름" maxlength="10" /></td>
+          <td><input type="text" name="name" placeholder="이름" maxlength="10"/></td>
         </tr>
         <tr>
           <th scope="row">성별<span class="es">필수 입력</span></th>
           <td>
             <div class="radio_group">
               <p class="radios">
-                <input type="radio" id="male" name="gender" value="M" checked />
+                <input type="radio" id="male" name="gender" value="M" checked/>
                 <label for="male">남</label><span class="check"></span>
               </p>
               <p class="radios">
-                <input type="radio" id="female" name="gender" value="F" />
+                <input type="radio" id="female" name="gender" value="F"/>
                 <label for="female">여</label><span class="check"></span>
               </p>
             </div>
@@ -91,20 +108,16 @@
         </tr>
         <tr>
           <th scope="row">주민등록번호<span class="es">필수 입력</span></th>
-          <td><input type="text" id="regNo" name="regNo" placeholder="하이푼(-) 포함 14자리 입력" maxlength="14"/></td>
-        </tr>
-        <tr>
-          <th scope="row">이메일<span class="es">필수 입력</span></th>
-          <td>
-            <input type="text" id="email" name="email" style="width: 80%;"/>
-            <button type="button" id="verifyBtn" class="btns btn_st5" onclick="verifyEmail();" style="width: 20%; float: right;">전송</button>
-          </td>
+          <td><input type="text" id="regNo" name="regNo" placeholder="하이푼(-) 포함 14자리 입력"
+                     maxlength="14"/></td>
         </tr>
         <tr id="checkEmail">
           <th scope="row">확인 코드<span class="es">필수 입력</span></th>
           <td>
             <input type="text" id="mailkey" name="mailkey" style="width: 50%;"/>
-            <button type="button" id="checkEmailBtn" class="btns btn_st5" onclick="checkEmail();" style="width: 20%; float: right;">확인</button>
+            <button type="button" id="checkEmailBtn" class="btns btn_st5" onclick="checkEmail();"
+                    style="width: 20%; float: right;">확인
+            </button>
           </td>
         </tr>
         </tbody>
@@ -115,7 +128,8 @@
       <button type="button" class="btns btn_bdr2" onclick="closeSignupPopup();">취소</button>
     </p>
   </div>
-  <button type="button" class="btn_close" onclick="closeSignupPopup();"><span><i class="far fa-times-circle"></i></span></button>
+  <button type="button" class="btn_close" onclick="closeSignupPopup();"><span><i
+      class="far fa-times-circle"></i></span></button>
 </div>
 
 <script th:src="@{/static/js/function.js}"></script>
@@ -137,47 +151,48 @@
 
     const form = document.getElementById('loginForm');
 
-    if ( !form.loginId.value || !form.password.value ) {
+    if (!form.loginId.value || !form.password.value) {
       alert('아이디와 비밀번호를 모두 입력해 주세요.');
       form.loginId.focus();
       return false;
     }
 
     $.ajax({
-      url : '/login',
-      type : 'POST',
-      dataType : 'json',
-      data : {
+      url: '/login',
+      type: 'POST',
+      dataType: 'json',
+      data: {
         loginId: form.loginId.value,
         password: form.password.value
       },
-      async : false,
-      success : function (response) {
+      async: false,
+      success: function (response) {
         location.href = '/setting/list.do';
       },
-      error : function (request, status, error) {
+      error: function (request, status, error) {
         alert('아이디와 비밀번호를 확인해 주세요.');
       }
     })
   }
 
-  $(document).on("keyup", "#regNo", function() {
-    $(this).val( $(this).val().replace(/[^0-9]/g, '').replace(/^(\d{0,6})(\d{0,7})$/g, '$1-$2').replace(/-{1,2}$/g, ''));
+  $(document).on("keyup", "#regNo", function () {
+    $(this).val(
+        $(this).val().replace(/[^0-9]/g, '').replace(/^(\d{0,6})(\d{0,7})$/g, '$1-$2').replace(
+            /-{1,2}$/g, ''));
   });
 
   function openSignupPopup() {
     layerPop('signupPopup')
   }
 
-
   // 회원가입 팝업 close
   function closeSignupPopup() {
     const form = document.getElementById('signupForm');
     const email = document.querySelector('#signupForm input[name="email"]');
     const code = document.querySelector('#signupForm input[name="mailkey"]');
-    fetch(`/caps/mail/cancel`,{
+    fetch(`/caps/mail/cancel`, {
       method: "POST",
-      headers:{
+      headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -185,11 +200,11 @@
         mailkey: code.value
       }),
     })
-            .then(response => {
-              if(!response.ok){
-                throw new Error();
-              }
-            })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error();
+      }
+    })
     form.loginId.readOnly = false;
     form.querySelector('#idCheckBtn').disabled = false;
     form.querySelector('#email').disabled = false;
@@ -217,7 +232,7 @@
   function checkLoginId() {
     const loginId = document.querySelector('#signupForm input[name="loginId"]');
     isValid(loginId, '아이디');
-    const count = getJson(`/member-count`, { loginId : loginId.value });
+    const count = getJson(`/member-count`, {loginId: loginId.value});
 
     if (count > 0) {
       alert('이미 가입된 아이디가 있습니다.');
@@ -231,44 +246,44 @@
     }
   }
 
-  function verifyEmail(){
+  function verifyEmail() {
     const email = document.querySelector('#signupForm input[name="email"]');
-    var input =  document.getElementById('checkEmail');
+    var input = document.getElementById('checkEmail');
     email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
 
-    if(!email_regex.test(email.value)){
+    if (!email_regex.test(email.value)) {
       alert("올바른 이메일 주소를 입력해주세요.");
       return;
     }
 
-    fetch("/caps/mail/send",{
+    fetch("/caps/mail/send", {
       method: "POST",
-      headers:{
+      headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
         email: email.value
       }),
     })
-            .then(response => {
-              if(response.ok){
-                if(input.style.display = 'none' && email.value != ""){
-                  input.style.display = 'table-row';
-                }
-              }
-              return response.text();
-            })
-            .then(data => {
-              alert(data);
-            });
+    .then(response => {
+      if (response.ok) {
+        if (input.style.display = 'none' && email.value != "") {
+          input.style.display = 'table-row';
+        }
+      }
+      return response.text();
+    })
+    .then(data => {
+      alert(data);
+    });
   }
 
-  function checkEmail(){
+  function checkEmail() {
     const email = document.querySelector('#signupForm input[name="email"]');
     const code = document.querySelector('#signupForm input[name="mailkey"]');
-    fetch(`/caps/mail/verify`,{
+    fetch(`/caps/mail/verify`, {
       method: "POST",
-      headers:{
+      headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -276,28 +291,21 @@
         mailkey: code.value
       }),
     })
-            .then(response => {
-              if(response.ok){
-                document.getElementById('email').disabled = true;
-                document.getElementById('verifyBtn').disabled = true;
-                document.getElementById('mailkey').disabled = true;
-                document.getElementById('checkEmailBtn').disabled = true;
-              }
-              return response.text();
-            })
-            .then(data => {
-              alert(data);
-            })
+    .then(response => {
+      if (response.ok) {
+        document.getElementById('email').disabled = true;
+        document.getElementById('verifyBtn').disabled = true;
+        document.getElementById('mailkey').disabled = true;
+        document.getElementById('checkEmailBtn').disabled = true;
+      }
+      return response.text();
+    })
+    .then(data => {
+      alert(data);
+    })
   }
 
   function validationMemberInfo(form) {
-
-    const fields = form.querySelectorAll('input:not([type="radio"])');
-    const fieldNames = ['아이디', '비밀번호', '비밀번호 재입력', '이름', '주민등록번호'];
-
-    for (let i = 0, len = fields.length; i < len; i++) {
-      isValid(fields[i], fieldNames[i]);
-    }
 
     if (form.loginId.readOnly === false) {
       alert('아이디 중복 체크를 완료해주세요.');
@@ -310,34 +318,19 @@
       throw new Error();
     }
 
-    if(form.password.value.length < 12 || form.password.value.length > 20){
-      alert('비밀번호는 12~20자리로 설정해주세요.')
+    if (form.password.value.length < 6) {
+      alert('비밀번호는 6자리 이상으로 설정해주세요.')
       form.password.focus();
       throw new Error();
     }
 
-    if(form.regNo.value.length !== 14) {
+    if (form.regNo.value.length !== 14) {
       alert('주민등록번호를 확인해주세요.');
       form.regNo.focus();
       form.regNo.value = '';
       throw new Error();
     }
-
-    if(form.email.value == ''){
-      alert('이메일을 입력해주세요.');
-      form.email.focus();
-      form.email.value = '';
-      throw new Error();
-    }
-
-    if(form.mailkey.value == ''){
-      alert('확인 코드를 입력해주세요.');
-      form.mailkey.focus();
-      form.mailkey.value = '';
-      throw new Error();
-    }
   }
-
 
   // 회원 정보 저장 (회원가입)
   function saveMember() {
@@ -349,16 +342,10 @@
     // 2. 파라미터 세팅
     const params = {}
     new FormData(form).forEach((value, key) => params[key] = value.trim());
-    // params.regNo = params.regNo.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
-
-    const email = document.querySelector('#signupForm input[name="email"]').value;
-    const mailkey = document.querySelector('#signupForm input[name="mailkey"]').value;
-    params['email'] = email;
-    params['mailkey'] = mailkey;
 
     // 3. Save API 호출
     var res = callApi('/member/signup', 'post', params);
-    if(res == null){
+    if (res == null) {
       alert('가입 중 오류가 발생했습니다!\n다시 회원 가입을 진행해주세요.');
       closeSignupPopup();
     } else {
