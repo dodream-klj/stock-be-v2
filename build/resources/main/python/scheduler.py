@@ -304,18 +304,18 @@ def main():
     selected_stocks = stock_analyzer.filter_selected_stocks(kospi_stocks)
 
     # PER 값 가져오기
-#     selected_symbols = kospi_stocks[kospi_stocks['Code'].isin(selected_stocks)]
-#     symbols = selected_symbols['Code'] + '.KS'
-#     names = selected_symbols['Name']
-#
-#     # Fetching PER 데이터 프로그레스 바 추가
-#     per_values = stock_analyzer.get_per_for_selected_stocks(symbols)
+    selected_symbols = kospi_stocks[kospi_stocks['Code'].isin(selected_stocks)]
+    symbols = selected_symbols['Code'] + '.KS'
+    names = selected_symbols['Name']
+
+    # Fetching PER 데이터 프로그레스 바 추가
+    per_values = stock_analyzer.get_per_for_selected_stocks(symbols)
 
     # 결과 출력
     stock_analyzer.send_message("****************코스피에서 시총500이상이며 불린저밴드평균 미만종목****************")
     now = datetime.now()
-    for symbol, name, per in zip(symbols, names):
-        stock_analyzer.send_message(f"[{now.strftime('%Y-%m-%d %H:%M:%S')}] {symbol}: 종목명 : {name}")
+    for symbol, name, per in zip(symbols, names, per_values):
+        stock_analyzer.send_message(f"[{now.strftime('%Y-%m-%d %H:%M:%S')}] {symbol}: PER = {per} 종목명 : {name}")
 
 if __name__ == "__main__":
     Scrap()
