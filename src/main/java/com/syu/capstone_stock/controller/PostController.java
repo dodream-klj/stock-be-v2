@@ -25,7 +25,7 @@ public class PostController {
             Post post = postService.findById(id);
             model.addAttribute("post",post);
         }
-        return "/key/write";
+        return "key/write";
     }
 
     @PostMapping("/key/save.do")
@@ -54,6 +54,6 @@ public class PostController {
         ClientUtils.getRemoteIP(request);
         Post post = postService.findById(id);
         model.addAttribute("post",post);
-        return "/key/view";
+        return "key/view";
     }
 }

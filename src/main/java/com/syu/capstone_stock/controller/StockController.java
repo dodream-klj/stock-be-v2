@@ -20,17 +20,17 @@ public class StockController {
     @GetMapping("/stock")
     public String openInfo(HttpServletRequest request){
         ClientUtils.getRemoteIP(request);
-        return "/stock_info";
+        return "stock_info";
     }
 
     @GetMapping("/search")
     public String search(HttpServletRequest request){
         ClientUtils.getRemoteIP(request);
-        return "/search";
+        return "search";
     }
 
 //    @GetMapping("/test")
 //    public String openTest(){
-//        return "/test";
+//        return "test";
 //    }
 }

@@ -29,7 +29,7 @@ public class MemberController {
     @GetMapping("/login.do")
     public String openLogin(HttpServletRequest request){
         ClientUtils.getRemoteIP(request);
-        return "/member/login";
+        return "member/login";
     }
 
     @PostMapping("/login")
@@ -57,7 +57,7 @@ public class MemberController {
     @GetMapping("/setting/list.do")
     public String openSetting(HttpServletRequest request){
         ClientUtils.getRemoteIP(request);
-        return "/setting/list";
+        return "setting/list";
     }
 
 //    @GetMapping("/members/{loginId}")
