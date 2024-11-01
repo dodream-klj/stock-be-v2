@@ -37,6 +37,7 @@ dependencies {
     implementation 'org.json:json:20231013'
     implementation 'org.zeroturnaround:zt-exec:1.12'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.2'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.4'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
