@@ -1,9 +1,11 @@
 package com.syu.capstone_stock.controller;
 
+import com.syu.capstone_stock.dto.StockTop10Response;
 import com.syu.capstone_stock.service.PyService;
 import com.syu.capstone_stock.util.ClientUtils;
 import com.syu.capstone_stock.util.FileUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,7 +21,7 @@ public class StockApiController {
     private final PyService pyService;
 
     @GetMapping("/caps/info/top10")
-    public String findStockTop10(HttpServletRequest request) {
+    public List<StockTop10Response> findStockTop10(HttpServletRequest request) {
         ClientUtils.getRemoteIP(request);
         return pyService.findStockTop10();
     }

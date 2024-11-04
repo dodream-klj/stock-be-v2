@@ -1,21 +1,43 @@
 package com.syu.capstone_stock.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.syu.capstone_stock.dto.StockTop10Response;
 import com.syu.capstone_stock.util.PythonExec;
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PyService {
-//    private final PyStockRepository pyStockRepository;
-//    private final PyDailyPriceRepository pyDailyPriceRepository;
     private List<String> result = null;
+    private final ObjectMapper objectMapper;
 
-    public String findStockTop10() {
+    public List<StockTop10Response> findStockTop10() {
         result = PythonExec.exec("top_10_stock.py");
-        return iterList(result);
+
+        List<StockTop10Response> stockTop10Responses = new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        for (String jsonString : result) {
+            try {
+                System.out.println(jsonString);
+                // 각 JSON 문자열을 StockDto 객체로 변환하여 List에 추가
+                stockTop10Responses = objectMapper.readValue(jsonString, new TypeReference<List<StockTop10Response>>() {});
+                log.info("stockTop10Responses: {}", stockTop10Responses);
+
+            } catch (Exception e) {
+                log.error("JSON 문자열을 객체로 변환하는 데 실패했습니다.", e);
+            }
+        }
+
+        return stockTop10Responses;
     }
 
     public void saveGraph(final String Code) {
