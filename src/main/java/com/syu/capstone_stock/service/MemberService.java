@@ -21,7 +21,7 @@ public class MemberService {
 
     @Transactional
     public ResponseEntity<?> saveMember(final MemberRequestDto params){
-        if(mailRepository.findByEmailAndMailauth(params.getEmail(), true) != null) {
+        if(true) {
             if(memberRepository.save(params.toEntity()).getId() > 0){
                 return ResponseEntity.ok().body("회원가입이 완료 되었습니다.");
             } else {
