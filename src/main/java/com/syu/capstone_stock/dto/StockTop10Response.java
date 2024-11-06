@@ -37,11 +37,11 @@ public class StockTop10Response {
 
     @JsonProperty("Close")
     @Schema(description = "종가", example = "59000")
-    private int Close;
+    private String Close;
 
     @JsonProperty("Changes")
     @Schema(description = "변화 금액", example = "700")
-    private int Changes;
+    private String Changes;
 
     @JsonProperty("ChangesRatio")
     @Schema(description = "변화 비율", example = "1.2")
@@ -49,19 +49,19 @@ public class StockTop10Response {
 
     @JsonProperty("Open")
     @Schema(description = "시가", example = "58600")
-    private int Open;
+    private String Open;
 
     @JsonProperty("High")
     @Schema(description = "최고가", example = "59400")
-    private int High;
+    private String High;
 
     @JsonProperty("Low")
     @Schema(description = "최저가", example = "58500")
-    private int Low;
+    private String Low;
 
     @JsonProperty("Volume")
     @Schema(description = "거래량", example = "9699591")
-    private long Volume;
+    private String Volume;
 
     @JsonProperty("Amount")
     @Schema(description = "거래 금액", example = "571652151700")
@@ -69,11 +69,11 @@ public class StockTop10Response {
 
     @JsonProperty("Marcap")
     @Schema(description = "시가총액", example = "352217170450000")
-    private long Marcap;
+    private String Marcap;
 
     @JsonProperty("Stocks")
     @Schema(description = "주식 수", example = "5969782550")
-    private long Stocks;
+    private String Stocks;
 
     @JsonProperty("MarketId")
     @Schema(description = "시장 ID", example = "STK")
