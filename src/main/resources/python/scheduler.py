@@ -13,7 +13,7 @@ import pymysql as mysql
 discordKeys = []
 telegramKeys = []
 
-conn = mysql.connect(host="localhost", user="dodream", password="enemfla1!", db="stock", use_unicode=True, charset="utf8")
+conn = mysql.connect(host="211.188.49.224", user="dodream", password="enemfla1!", db="stock", use_unicode=True, charset="utf8")
 cur = conn.cursor()
 
 cur.execute("SELECT apikey from tb_post where delete_yn = 0 and service = '디스코드'")

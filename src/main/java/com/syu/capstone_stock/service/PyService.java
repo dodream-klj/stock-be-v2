@@ -1,8 +1,12 @@
 package com.syu.capstone_stock.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.syu.capstone_stock.dto.ExchangesResponseDto;
+import com.syu.capstone_stock.dto.StockChartRequestDto;
+import com.syu.capstone_stock.dto.StockChartResponseDto;
+import com.syu.capstone_stock.dto.StockNameInfoResponseDto;
 import com.syu.capstone_stock.dto.StockTop10Response;
 import com.syu.capstone_stock.util.PythonExec;
 import java.util.ArrayList;
@@ -49,13 +53,38 @@ public class PyService {
         return iterList(result);
     }
 
-    public String findAllStock() {
-        return PythonExec.execByzt("all_stock_code_name.py");
+    public List<StockNameInfoResponseDto> findAllStock() {
+        String result = PythonExec.execByzt("all_stock_code_name.py");
+
+        List<StockNameInfoResponseDto> stockNameInfoResponseDtos;
+
+        try {
+            stockNameInfoResponseDtos = objectMapper.readValue(result, new TypeReference<>() {});
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        log.info("stockNameInfoResponseDtos: {}", stockNameInfoResponseDtos);
+
+        return stockNameInfoResponseDtos;
     }
 
-    public String findExchange(){
+    public List<ExchangesResponseDto> findExchange(){
         result =  PythonExec.exec("exchange_rate.py");
-        return iterList(result);
+
+        List<ExchangesResponseDto> exchangesResponseDtos = new ArrayList<>();
+
+        for (String jsonString : result) {
+            try {
+                System.out.println(jsonString);
+                exchangesResponseDtos = objectMapper.readValue(jsonString, new TypeReference<>() {});
+                log.info("exchangesResponseDtos: {}", exchangesResponseDtos);
+
+            } catch (Exception e) {
+                log.error("JSON 문자열을 객체로 변환하는 데 실패했습니다.", e);
+            }
+        }
+
+        return exchangesResponseDtos;
     }
 
     private String iterList(List<String> arg) {
@@ -66,11 +95,25 @@ public class PyService {
         return res;
     }
 
-//    public List<Stock> saveStockKRX(StockRequestDto stockRequestDto){
-//        return pyStockRepository.saveAll(stockRequestDto.toArrays());
-//    }
-//
-//    public List<DailyPrice> saveDailyPrice(DailyPriceRequestDto dailyPriceRequestDto){
-//        return pyDailyPriceRepository.saveAll(dailyPriceRequestDto.toArrays());
-//    }
+    public List<StockChartResponseDto> getStockChartData(String code, StockChartRequestDto stockChartRequestDto) {
+        String startDate = stockChartRequestDto.getStartDate();
+        String endDate = stockChartRequestDto.getEndDate();
+
+        result = PythonExec.exec("get_stock_data.py", code, startDate, endDate);
+
+        List<StockChartResponseDto> stockChartResponseDto = new ArrayList<>();
+
+        for (String jsonString : result) {
+            try {
+                System.out.println(jsonString);
+                stockChartResponseDto = objectMapper.readValue(jsonString, new TypeReference<>() {});
+                log.info("stockChartResponseDto: {}", stockChartResponseDto);
+
+            } catch (Exception e) {
+                log.error("JSON 문자열을 객체로 변환하는 데 실패했습니다.", e);
+            }
+        }
+
+        return stockChartResponseDto;
+    }
 }
