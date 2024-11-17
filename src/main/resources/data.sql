@@ -42,7 +42,6 @@ create table tb_member(
     id int auto_increment primary key,
     login_id varchar(20) unique not null comment '아이디',
     password varchar(120) not null comment '비밀번호',
-    email varchar(50) not null comment '이메일',
     name varchar(20) not null comment '이름',
     reg_no varchar(64) not null comment '주민등록번호',
     gender varchar(1) not null comment '성별',
@@ -56,7 +55,7 @@ create table tb_member(
 create table tb_post(
     id int auto_increment primary key,
     service varchar(500) not null comment '서비스',
-    apikey varchar(100) not null comment 'API키',
+    apikey varchar(500) not null comment 'API키',
     email varchar(50) not null comment '등록 사용자',
     delete_yn int not null default 0 comment '삭제 여부',
     created_date datetime not null default current_timestamp() comment '생성일시',
