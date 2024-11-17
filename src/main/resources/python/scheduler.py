@@ -188,7 +188,7 @@ class StockAnalyzer:
             requests.post(key, data=message)
 
         for key in telegramKeys:
-            bot_token, chat_id = key.split(":")
+            bot_token, chat_id = key.split("/")
             data = {"chat_id": chat_id, "text": msg}
             send_url = f"https://api.telegram.org/bot{bot_token}/sendmessage"
             requests.get(send_url, data=data)
