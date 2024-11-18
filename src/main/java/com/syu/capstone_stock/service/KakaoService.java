@@ -1,5 +1,6 @@
 package com.syu.capstone_stock.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.syu.capstone_stock.dto.KakaoTokenResponseDto;
 import com.syu.capstone_stock.dto.KakaoUserInfoResponseDto;
 import io.netty.handler.codec.http.HttpHeaderValues;
@@ -86,5 +87,24 @@ public class KakaoService {
         log.info("[ Kakao Service ] ProfileImageUrl ---> {} ", userInfo.getKakaoAccount().getProfile().getProfileImageUrl());
 
         return userInfo;
+    }
+
+    public JsonNode Logout(String authorize_code){
+        JsonNode returnNode = WebClient.create(KAUTH_USER_URL_HOST)
+                .post()
+                .uri(uriBuilder -> uriBuilder
+                        .scheme("https")
+                        .path("/v1/user/logout")
+                        .build(true))
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + authorize_code) // access token 인가
+                .retrieve()
+                //TODO : Custom Exception
+                .onStatus(HttpStatusCode::is4xxClientError, clientResponse -> Mono.error(new RuntimeException("Invalid Parameter")))
+                .onStatus(HttpStatusCode::is5xxServerError, clientResponse -> Mono.error(new RuntimeException("Internal Server Error")))
+                .bodyToMono(JsonNode.class)
+                .block();
+
+        System.out.println("return Node = " + returnNode);
+        return returnNode;
     }
 }
