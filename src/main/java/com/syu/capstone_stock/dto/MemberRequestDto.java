@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class MemberRequestDto {
     private Long id;
     private String loginId;
@@ -24,7 +24,7 @@ public class MemberRequestDto {
     public Member toEntity(){
         return Member.builder()
                 .loginId(this.loginId)
-                .password(EncryptionUtil.sha256Encode(this.password))
+                .password(this.password)
                 .email(this.email)
                 .name(this.name)
                 .regNo(EncryptionUtil.aesEncode(this.regNo))

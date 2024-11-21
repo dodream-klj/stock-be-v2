@@ -2,7 +2,9 @@ package com.syu.capstone_stock.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.syu.capstone_stock.dto.KakaoUserInfoResponseDto;
+import com.syu.capstone_stock.dto.MemberRequestDto;
 import com.syu.capstone_stock.service.KakaoService;
+import com.syu.capstone_stock.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,15 +23,20 @@ public class KakaoLoginController {
 
     private final KakaoService kakaoService;
 
-    //@GetMapping("/kakao-login")
+    private final MemberService memberService;
+
+    //@GetMapping("/kakao-login")N
     @GetMapping("/api/auth/callback/kakao")
-    public ResponseEntity<?> callback(@RequestParam("code") String code) {
+    public String callback(@RequestParam("code") String code) {
         String accessToken = kakaoService.getAccessTokenFromKakao(code);
-        System.out.println("accessToken info  = " + accessToken);
         KakaoUserInfoResponseDto userInfo = kakaoService.getUserInfo(accessToken);
-        System.out.println(" userInfo user nickname info   = " + userInfo.getProperties().get("nickname"));
+        MemberRequestDto mrDto = new MemberRequestDto();
+        mrDto.setLoginId(userInfo.getKakaoAccount().getEmail());
+        mrDto.setEmail(userInfo.getKakaoAccount().getEmail());
+        mrDto.setName(userInfo.getProperties().get("nickname"));
+        memberService.saveMember(mrDto);
         // User 로그인, 또는 회원가입 로직 추가
-        return new ResponseEntity<>(HttpStatus.OK);
+        return "redirect:/";
     }
 
     @RequestMapping(value="/logout", produces="application/json")
