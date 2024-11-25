@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-public class StockTop10Response {
+public class StockInfoResponse {
 
     @JsonProperty("Code")
     @Schema(description = "주식 코드", example = "005930")

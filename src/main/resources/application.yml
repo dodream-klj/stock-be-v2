@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     url: ${DATASOURCE_URL}
-    username: root
+    username: ${DATASOURCE_USER}
     password: ${DATASOURCE_PASSWORD}
 
   devtools:

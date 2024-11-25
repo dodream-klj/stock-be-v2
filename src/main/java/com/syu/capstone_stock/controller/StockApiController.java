@@ -4,7 +4,7 @@ import com.syu.capstone_stock.dto.ExchangesResponseDto;
 import com.syu.capstone_stock.dto.StockChartRequestDto;
 import com.syu.capstone_stock.dto.StockChartResponseDto;
 import com.syu.capstone_stock.dto.StockNameInfoResponseDto;
-import com.syu.capstone_stock.dto.StockTop10Response;
+import com.syu.capstone_stock.dto.StockInfoResponse;
 import com.syu.capstone_stock.service.PyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -28,7 +28,7 @@ public class StockApiController {
         description = "거래량 상위 TOP 10 종목을 조회합니다."
     )
     @GetMapping("/caps/info/top10")
-    public List<StockTop10Response> findStockTop10() {
+    public List<StockInfoResponse> findStockTop10() {
         return pyService.findStockTop10();
     }
 
@@ -55,28 +55,20 @@ public class StockApiController {
     )
     @GetMapping("/caps/stocks/{code}/chart")
     public List<StockChartResponseDto> saveStockKRX(
-        @Parameter(description = "조회할 종목 코드 (예: 005930)", example = "005930")
-        @PathVariable String code
+        @Parameter(description = "조회할 종목 코드 (예: 005930)", example = "005930") @PathVariable String code
         , StockChartRequestDto stockChartRequestDto
     ) {
         return pyService.getStockChartData(code, stockChartRequestDto);
     }
 
-//    @GetMapping("/caps/graph/{Code}")
-//    public void saveGraph(@PathVariable String Code, HttpServletRequest request) {
-//        ClientUtils.getRemoteIP(request);
-//        pyService.saveGraph(Code);
-//    }
-
-//    @GetMapping("/caps/info/{Code}")
-//    public String findStockInfo(@PathVariable String Code, HttpServletRequest request) {
-//        ClientUtils.getRemoteIP(request);
-//        return pyService.findStockInfo(Code);
-//    }
-
-//    @GetMapping("/caps/info/graph/{Code}/{filename}")
-//    public ResponseEntity<?> getGraphImg(@PathVariable String Code, @PathVariable String filename, HttpServletRequest request){
-//        ClientUtils.getRemoteIP(request);
-//        return FileUtil.getResource(Code, filename);
-//    }
+    @Operation(
+        summary = "주식 단일 정보 조회",
+        description = "종목 코드로 주식 단일 정보를 조회합니다."
+    )
+    @GetMapping("/caps/stocks/{code}")
+    public StockInfoResponse findStockInfo(
+        @Parameter(description = "조회할 종목 코드 (예: 005930)", example = "005930") @PathVariable String code
+    ) {
+        return pyService.findStockInfo(code);
+    }
 }
