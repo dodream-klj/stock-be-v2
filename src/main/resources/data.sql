@@ -77,3 +77,10 @@ create table email_auth(
     mailauth int not null default 0 ,
     created_date datetime not null default current_timestamp()
 );
+
+create table favorite_stock(
+    id int auto_increment primary key,
+    Code varchar(30) not null comment '종목코드',
+    login_id varchar(20)  not null comment '아이디',
+    constraint fk_Code1 foreign key (Code) references stock_krx(Code) on delete cascade
+) comment '관심종목';
