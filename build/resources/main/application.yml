@@ -1,10 +1,14 @@
 server:
   port: 8080
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: dkssudgk!23
+    key-store-type: PKCS12
+    key-alias: dodream
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DATASOURCE_URL}
-    username: root
+    username: ${DATASOURCE_USER}
     password: ${DATASOURCE_PASSWORD}
 
   devtools:
@@ -15,13 +19,15 @@ spring:
 
   thymeleaf:
     cache: false
+    prefix: classpath:/templates/
+    suffix: .html
 
   jpa:
     generate-ddl: false
     show-sql: true
     open-in-view: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         default_batch_fetch_size: '100'

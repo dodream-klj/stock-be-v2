@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface FavoriteStockRepository extends JpaRepository<FavoriteStock, Long> {
-    Member findByDeleteYnAndLoginId(Boolean b, String loginId);
-    Integer countByLoginId(String loginId);
-    Member findByEmailAndMailauth(String email, Boolean b);
+//    Member findByDeleteYnAndLoginId(Boolean b, String loginId);
+//    Integer countByLoginId(String loginId);
+//    Member findByEmailAndMailauth(String email, Boolean b);
     List<FavoriteStockRequestDto> findAllByLoginId(String loginId);
 }

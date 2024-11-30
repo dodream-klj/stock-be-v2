@@ -22,4 +22,6 @@ public class FavoriteStock extends BaseTimeEntity {
     private String code;
 
     private String loginId;
+
+    private Boolean deleteYn;
 }
