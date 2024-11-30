@@ -1,14 +1,10 @@
 package com.syu.capstone_stock.service;
 
 import com.syu.capstone_stock.domain.FavoriteStock;
-import com.syu.capstone_stock.domain.Member;
 import com.syu.capstone_stock.dto.FavoriteStockRequestDto;
-import com.syu.capstone_stock.dto.MemberRequestDto;
 import com.syu.capstone_stock.repositry.FavoriteStockRepository;
-import com.syu.capstone_stock.repositry.MailRepository;
-import com.syu.capstone_stock.repositry.MemberRepository;
-import com.syu.capstone_stock.util.EncryptionUtil;
 import jakarta.transaction.Transactional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,37 +15,38 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class FavoriteStockService {
+
     private final FavoriteStockRepository favoriteStockRepository;
     private FavoriteStock fs;
 
     @Transactional
-    public ResponseEntity<?> addFavoriteStock(final FavoriteStockRequestDto params){
-        if(true) {
-            if(favoriteStockRepository.save(params.toEntity()).getId() > 0){
-                return ResponseEntity.ok().body("관심종목으로 추가되었습니다.");
-            } else {
-                return ResponseEntity.badRequest().body("잘못된 요청입니다.");
-            }
-        } else {
-            return null;
-        }
-    }
+    public ResponseEntity<?> addFavoriteStock(String loginId, String code) {
+        FavoriteStock favoriteStock = new FavoriteStock();
+        favoriteStock.setCode(code);
+        favoriteStock.setLoginId(loginId);
 
-    private FavoriteStock findMemberById(final Long id){
-        return favoriteStockRepository.findById(id).get();
+        if (favoriteStockRepository.existsByLoginIdAndCode(loginId, code)) {
+            return ResponseEntity.badRequest().body("이미 추가된 관심종목입니다.");
+        }
+
+        if (favoriteStockRepository.save(favoriteStock).getId() > 0) {
+            return ResponseEntity.ok().body("관심종목으로 추가되었습니다.");
+        } else {
+            return ResponseEntity.badRequest().body("잘못된 요청입니다.");
+        }
     }
 
     @Transactional
-    public Long deleteFavoriteStock(final Long id){
-        if(id != null){
-            fs = findMemberById(id);
-            return favoriteStockRepository.save(fs).getId();
-        } else {
-            throw new NullPointerException();
-        }
+    public ResponseEntity<?> deleteFavoriteStock(String loginId, String id) {
+        favoriteStockRepository.deleteFavoriteStockByLoginIdAndCode(loginId, id);
+        return ResponseEntity.ok().body("관심종목 삭제 성공");
     }
 
-    public List<FavoriteStockRequestDto> selectFavoriteStockListByLoginId(final String loginId){
-        return favoriteStockRepository.findAllByLoginId(loginId);
+    public List<FavoriteStockRequestDto> selectFavoriteStockListByLoginId(String loginId) {
+        List<FavoriteStock> favoriteStocks = favoriteStockRepository.findAllByLoginId(loginId);
+
+        return favoriteStocks.stream()
+            .map(stock -> new FavoriteStockRequestDto(stock.getCode(), stock.getLoginId()))
+            .collect(Collectors.toList());
     }
 }
