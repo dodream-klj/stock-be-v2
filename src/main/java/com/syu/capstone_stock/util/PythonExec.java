@@ -24,7 +24,7 @@ public class PythonExec {
     public static List<String> exec(String filename, String ... args) {
         List<String> cmd = new ArrayList<>();
         cmd.add("python3");
-        cmd.add(System.getProperty("user.dir") + "/src/main/resources/python/" + filename);
+        cmd.add(System.getProperty("user.dir") + "/python/" + filename);
         if(args != null){
             Collections.addAll(cmd, args);
         }
@@ -61,7 +61,7 @@ public class PythonExec {
     public static String execByzt(String filename, String ... args){
         List<String> cmd = new ArrayList<>();
         cmd.add("python3");
-        cmd.add(System.getProperty("user.dir") + "/src/main/resources/python/" + filename);
+        cmd.add(System.getProperty("user.dir") + "/python/" + filename);
         if(args != null){
             Collections.addAll(cmd, args);
         }
@@ -81,7 +81,7 @@ public class PythonExec {
     public static void execSchedule(){
         List<String> cmd = new ArrayList<>();
         cmd.add("python3");
-        cmd.add(System.getProperty("user.dir") + "/src/main/resources/python/" + "scheduler.py");
+        cmd.add(System.getProperty("user.dir") + "/python/" + "scheduler.py");
         try{
             ProcessResult res = new ProcessExecutor().command(cmd)
                     .redirectOutput(new LogOutputStream() {
