@@ -71,4 +71,15 @@ public class StockApiController {
     ) {
         return pyService.findStockInfo(code);
     }
+
+    @Operation(
+        summary = "주식 Like 조건 정보 검색",
+        description = "종목명으로 주식 검색 Like 결과 반환."
+    )
+    @GetMapping("/caps/stocks/search/{name}")
+    public List<StockInfoResponse> findStockInfoLikeSearch(
+        @Parameter(description = "조회할 종목명 (예: 삼성)", example = "삼성") @PathVariable String name
+    ) {
+        return pyService.findStockInfoLikeSearch(name);
+    }
 }

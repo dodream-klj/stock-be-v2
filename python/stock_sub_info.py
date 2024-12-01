@@ -9,7 +9,6 @@ stock_code = sys.argv[1]
 krx = fdr.StockListing('KRX')
 # req = dict()
 
-# 시가총액 상위 10개 종목 가져오기
 stock_info = krx[krx['Code'] == stock_code]
 stock_info_json = stock_info.to_json(orient='records', force_ascii=False)
 

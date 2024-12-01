@@ -186,13 +186,13 @@ class StockAnalyzer:
         for key in discordKeys:
             message = {"content": f"{str(msg)}"}
             requests.post(key, data=message)
+            print(message)
 
         for key in telegramKeys:
             bot_token, chat_id = key.split("/")
             data = {"chat_id": chat_id, "text": msg}
             send_url = f"https://api.telegram.org/bot{bot_token}/sendmessage"
             requests.get(send_url, data=data)
-        print(message)
 
 class ListKS:
     ##코스닥 종목에서 RSI 30미만 종목 추출하는 것입니다.
