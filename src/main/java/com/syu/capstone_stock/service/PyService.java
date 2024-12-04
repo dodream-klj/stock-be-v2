@@ -3,6 +3,7 @@ package com.syu.capstone_stock.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.syu.capstone_stock.dto.AiStockInfoResponse;
 import com.syu.capstone_stock.dto.ExchangesResponseDto;
 import com.syu.capstone_stock.dto.StockChartRequestDto;
 import com.syu.capstone_stock.dto.StockChartResponseDto;
@@ -126,5 +127,18 @@ public class PyService {
         }
 
         return stockInfoResponses;
+    }
+
+    public AiStockInfoResponse getAiSignal(String code) {
+        String result = PythonExec.execByzt("predictV2.py", code);
+        try {
+            // '{'의 인덱스를 찾고 이후 문자열 추출
+            int startIndex = result.indexOf('{');
+            String extracted = result.substring(startIndex);
+
+            return objectMapper.readValue(extracted, AiStockInfoResponse.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.syu.capstone_stock.controller;
 
+import com.syu.capstone_stock.dto.AiStockInfoResponse;
 import com.syu.capstone_stock.dto.ExchangesResponseDto;
 import com.syu.capstone_stock.dto.StockChartRequestDto;
 import com.syu.capstone_stock.dto.StockChartResponseDto;
@@ -81,5 +82,16 @@ public class StockApiController {
         @Parameter(description = "조회할 종목명 (예: 삼성)", example = "삼성") @PathVariable String name
     ) {
         return pyService.findStockInfoLikeSearch(name);
+    }
+
+    @Operation(
+        summary = "주식 빅데이터 매수 신호 출력",
+        description = "빅데이터 알고리즘을 활용한 매수 신호 출력"
+    )
+    @GetMapping("/caps/stocks/{code}/ai/signal")
+    public AiStockInfoResponse getAiSignal(
+        @Parameter(description = "조회할 종목코드 (예: 005930)", example = "005930") @PathVariable String code
+    ) {
+        return pyService.getAiSignal(code);
     }
 }
