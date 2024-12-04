@@ -1,6 +1,6 @@
 package com.syu.capstone_stock.controller;
 
-import com.syu.capstone_stock.dto.FavoriteStockRequestDto;
+import com.syu.capstone_stock.dto.StockInfoResponse;
 import com.syu.capstone_stock.service.FavoriteStockService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class FavoriteStockController {
         description = "로그인 아이디를 인자값으로 받아 관심종목을 불러온다."
     )
     @GetMapping("/favorite/stock/{loginId}")
-    public List<FavoriteStockRequestDto> getFavoriteStock(@PathVariable String loginId){
+    public List<StockInfoResponse> getFavoriteStock(@PathVariable String loginId){
         return favoriteStockService.selectFavoriteStockListByLoginId(loginId);
     }
 

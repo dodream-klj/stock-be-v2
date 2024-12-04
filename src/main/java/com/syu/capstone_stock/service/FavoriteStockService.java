@@ -2,6 +2,7 @@ package com.syu.capstone_stock.service;
 
 import com.syu.capstone_stock.domain.FavoriteStock;
 import com.syu.capstone_stock.dto.FavoriteStockRequestDto;
+import com.syu.capstone_stock.dto.StockInfoResponse;
 import com.syu.capstone_stock.repositry.FavoriteStockRepository;
 import jakarta.transaction.Transactional;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ public class FavoriteStockService {
 
     private final FavoriteStockRepository favoriteStockRepository;
     private FavoriteStock fs;
+    private final PyService pyService;
 
     @Transactional
     public ResponseEntity<?> addFavoriteStock(String loginId, String code) {
@@ -42,11 +44,14 @@ public class FavoriteStockService {
         return ResponseEntity.ok().body("관심종목 삭제 성공");
     }
 
-    public List<FavoriteStockRequestDto> selectFavoriteStockListByLoginId(String loginId) {
+    public List<StockInfoResponse> selectFavoriteStockListByLoginId(String loginId) {
         List<FavoriteStock> favoriteStocks = favoriteStockRepository.findAllByLoginId(loginId);
 
-        return favoriteStocks.stream()
-            .map(stock -> new FavoriteStockRequestDto(stock.getCode(), stock.getLoginId()))
-            .collect(Collectors.toList());
+        String result = favoriteStocks.stream()
+            .map(FavoriteStock::getCode)
+            .collect(Collectors.joining(","));
+
+        return pyService.findStockInfoFavorite(result);
+
     }
 }

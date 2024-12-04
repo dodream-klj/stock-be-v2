@@ -141,4 +141,23 @@ public class PyService {
             throw new RuntimeException(e);
         }
     }
+
+    public List<StockInfoResponse> findStockInfoFavorite(String name) {
+        result =  PythonExec.exec("stock_sub_favorite_info.py", name);
+
+        List<StockInfoResponse> stockInfoResponses = new ArrayList<>();
+
+        for (String jsonString : result) {
+            try {
+                System.out.println(jsonString);
+                stockInfoResponses = objectMapper.readValue(jsonString, new TypeReference<>() {});
+                log.info("exchangesResponseDtos: {}", stockInfoResponses);
+
+            } catch (Exception e) {
+                log.error("JSON 문자열을 객체로 변환하는 데 실패했습니다.", e);
+            }
+        }
+
+        return stockInfoResponses;
+    }
 }
